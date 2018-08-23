@@ -1,0 +1,27 @@
+{
+  "name": "goblin-builder",
+  "version": "0.0.1",
+  "description": "Electron and Debian builder",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "config": {
+    "xcraft": {
+      "commands": true
+    }
+  },
+  "dependencies": {
+    "electron-builder": "^20.26.0",
+    "fs-extra": "^5.0.0",
+    "node-deb": "^0.10.7",
+    "uuid": "^3.1.0",
+    "watt": "^3.3.0",
+    "xcraft-core-fs": "^1.0.1",
+    "xcraft-core-goblin": "^2.0.1",
+    "xcraft-core-host": "^1.0.0",
+    "xcraft-dev-rules": "^0.2.0"
+  }
+}
