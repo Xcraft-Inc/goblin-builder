@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "electron-builder": "^20.26.0",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^7.0.1",
     "gigawatts": "^4.0.1",
     "goblin-webpack": "^0.0.1",
     "node-deb": "^0.10.7",
