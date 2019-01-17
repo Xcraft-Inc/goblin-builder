@@ -2,7 +2,6 @@
   "name": "goblin-builder",
   "version": "0.0.1",
   "description": "Electron and Debian builder",
-  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,7 +21,8 @@
     "uuid": "^3.1.0",
     "xcraft-core-fs": "^1.0.1",
     "xcraft-core-goblin": "^2.0.1",
-    "xcraft-core-host": "^1.0.0"
+    "xcraft-core-host": "^1.0.0",
+    "xcraft-core-utils": "^1.1.0"
   },
   "devDependencies": {
     "xcraft-dev-rules": "^0.3.0",
