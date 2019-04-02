@@ -6,6 +6,10 @@ import Label from 'gadgets/label/widget';
 import Button from 'gadgets/button/widget';
 import Field from 'gadgets/field/widget';
 
+const ElectronifyEnums = {
+  app: ['polypheme', 'venture'],
+};
+
 class Electronify extends Form {
   constructor() {
     super(...arguments);
@@ -38,7 +42,7 @@ class Electronify extends Form {
             <Field
               kind="combo"
               labelText="application"
-              list={['polypheme', 'venture']}
+              list={ElectronifyEnums.app}
               model=".app"
             />
             <Field kind="directory" model=".output" />
