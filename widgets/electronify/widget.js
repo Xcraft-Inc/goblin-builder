@@ -33,7 +33,7 @@ class Electronify extends Form {
     const Form = this.Form;
 
     return (
-      <Container kind="view" grow="1" spacing="large">
+      <Container kind="view" grow="1" horizontalSpacing="large">
         <Container kind="pane-header">
           <Label text="Produire une release" kind="pane-header" />
         </Container>
