@@ -5,6 +5,7 @@ import Container from 'gadgets/container/widget';
 import Label from 'gadgets/label/widget';
 import Button from 'gadgets/button/widget';
 import Field from 'gadgets/field/widget';
+import DirectoryInput from 'goblin-gadgets/widgets/directory-input-nc/widget';
 
 const ElectronifyEnums = {
   app: ['polypheme', 'venture'],
@@ -45,7 +46,7 @@ class Electronify extends Form {
               list={ElectronifyEnums.app}
               model=".app"
             />
-            <Field kind="directory" model=".output" />
+            <DirectoryInput model=".output" />
             <Button text="Build" onClick={this.runBuild} />
           </Form>
         </Container>
