@@ -7,7 +7,7 @@ const path = require('path');
  *
  * @returns {Object} The list and definitions of commands.
  */
-exports.xcraftCommands = function() {
+exports.xcraftCommands = function () {
   return require('./lib/service.js')(
     path.basename(__filename, '.js'),
     'web-builder'
