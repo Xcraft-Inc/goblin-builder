@@ -1,10 +1,10 @@
 import React from 'react';
 import Form from 'laboratory/form';
 
-import Container from 'gadgets/container/widget';
-import Label from 'gadgets/label/widget';
-import Button from 'gadgets/button/widget';
-import Field from 'gadgets/field/widget';
+import Container from 'goblin-gadgets/widgets/container/widget';
+import Label from 'goblin-gadgets/widgets/label/widget';
+import Button from 'goblin-gadgets/widgets/button/widget';
+import Field from 'goblin-gadgets/widgets/field/widget';
 import DirectoryInput from 'goblin-gadgets/widgets/directory-input-nc/widget';
 
 const ElectronifyEnums = {
