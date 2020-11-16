@@ -24,7 +24,7 @@
     "xcraft-core-goblin": "^4.0.1",
     "xcraft-core-host": "^2.3.0",
     "xcraft-core-process": "^1.1.1",
-    "xcraft-core-utils": "^3.0.0"
+    "xcraft-core-utils": "^3.1.0"
   },
   "devDependencies": {
     "prettier": "2.0.4",
