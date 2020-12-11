@@ -16,6 +16,7 @@
     "electron-builder": "^22.4.1",
     "fs-extra": "^7.0.1",
     "gigawatts": "^4.0.1",
+    "goblin-blacksmith": "^0.0.1",
     "goblin-webpack": "^1.0.0",
     "lodash": "^4.17.11",
     "node-deb": "0.10.7",
