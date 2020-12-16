@@ -20,7 +20,7 @@
     "goblin-webpack": "^1.0.0",
     "lodash": "^4.17.11",
     "node-deb": "0.10.7",
-    "uuid": "^3.1.0",
+    "uuid": "^8.3.2",
     "xcraft-core-fs": "^2.1.0",
     "xcraft-core-goblin": "^4.0.1",
     "xcraft-core-host": "^2.3.0",
