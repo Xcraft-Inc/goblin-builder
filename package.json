@@ -16,16 +16,16 @@
     "electron-builder": "22.10.5",
     "fs-extra": "^9.1.0",
     "gigawatts": "^4.0.1",
-    "goblin-blacksmith": "^1.0.0",
-    "goblin-webpack": "^1.0.0",
+    "goblin-blacksmith": "^2.0.0",
+    "goblin-webpack": "^2.0.0",
     "lodash": "^4.17.11",
     "node-deb": "0.10.7",
     "uuid": "^8.3.2",
     "xcraft-core-fs": "^2.1.0",
-    "xcraft-core-goblin": "^4.0.1",
-    "xcraft-core-host": "^2.3.0",
+    "xcraft-core-goblin": "^5.0.0",
+    "xcraft-core-host": "^3.0.0",
     "xcraft-core-process": "^1.1.1",
-    "xcraft-core-utils": "^3.1.0"
+    "xcraft-core-utils": "^4.0.0"
   },
   "devDependencies": {
     "prettier": "2.0.4",
