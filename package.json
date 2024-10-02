@@ -19,6 +19,7 @@
     "goblin-blacksmith": "^3.0.0",
     "goblin-webpack": "^4.0.0",
     "lodash": "^4.17.11",
+    "msgpackr": "^1.11.0",
     "node-deb": "0.10.7",
     "uuid": "^8.3.2",
     "xcraft-core-env": "^3.0.4",
