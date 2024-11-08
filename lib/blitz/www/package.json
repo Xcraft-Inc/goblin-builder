@@ -6,6 +6,6 @@
     "@swc/cli": "0.5.0"
   },
   "scripts": {
-    "postinstall": "npx swc node_modules/@webcontainer/api/dist/index.js -o webcontainer.js && rm -rf node_modules"
+    "postinstall": "node_modules/.bin/swc node_modules/@webcontainer/api/dist/index.js -o webcontainer.js && rm -rf node_modules"
   }
 }
