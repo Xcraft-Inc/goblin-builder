@@ -1,6 +1,6 @@
 {
   "name": "goblin-builder",
-  "version": "3.7.6",
+  "version": "3.7.7",
   "description": "Electron and Debian builder",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
