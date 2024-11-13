@@ -13,7 +13,6 @@
     }
   },
   "dependencies": {
-    "dmg-license": "^1.0.11",
     "electron-builder": "^24.6.4",
     "fs-extra": "^9.1.0",
     "gigawatts": "^4.0.1",
@@ -30,6 +29,9 @@
     "xcraft-core-host": "^3.0.0",
     "xcraft-core-process": "^1.1.1",
     "xcraft-core-utils": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "dmg-license": "^1.0.11"
   },
   "devDependencies": {
     "prettier": "2.0.4",
