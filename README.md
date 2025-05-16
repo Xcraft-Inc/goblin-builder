@@ -271,7 +271,7 @@ La `mainQuest` est exécutée avant l'état `ready` d'Electron. Elle doit être 
 
 La `secondaryQuest` est appelée lorsqu'Electron est prêt. Il est alors possible d'utiliser des goblins comme `goblin-wm` pour créer des fenêtres.
 
-_Cette documentation a été mise à jour._
+_Cette documentation a été mise à jour automatiquement._
 
 [goblin-webpack]: https://github.com/Xcraft-Inc/goblin-webpack
 [goblin-blacksmith]: https://github.com/Xcraft-Inc/goblin-blacksmith
