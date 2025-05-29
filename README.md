@@ -4,6 +4,15 @@
 
 Le module `goblin-builder` est un outil de construction et de packaging polyvalent pour les applications Xcraft. Il permet de générer différents types de packages pour diverses plateformes (Windows, Linux, macOS) et formats (Electron, Debian, Node.js, Web, Blitz). Ce module transforme une application Xcraft en un produit déployable en gérant les dépendances, les ressources et les configurations spécifiques à chaque plateforme.
 
+## Sommaire
+
+- [Structure du module](#structure-du-module)
+- [Fonctionnement global](#fonctionnement-global)
+- [Exemples d'utilisation](#exemples-dutilisation)
+- [Interactions avec d'autres modules](#interactions-avec-dautres-modules)
+- [Configuration avancée](#configuration-avancée)
+- [Détails des sources](#détails-des-sources)
+
 ## Structure du module
 
 Le module est organisé autour de plusieurs constructeurs spécialisés, chacun exposé via une commande Xcraft :
@@ -242,10 +251,6 @@ Utilitaire pour créer un snapshot d'une application Node.js, utilisé par le co
 
 - **`snapshot(inputDir, outputFile)`** - Crée un snapshot du répertoire d'entrée et l'écrit dans le fichier de sortie.
 
-### `eslint.config.js`
-
-Configuration ESLint pour le projet, utilisant le nouveau format de configuration plat d'ESLint. Il configure les règles pour JavaScript et React.
-
 ## Définitions d'applications
 
 Les définitions d'applications sont situées dans le répertoire `app/` du projet d'application. Le nom du répertoire doit correspondre au nom fourni dans le fichier `app.json`.
@@ -271,7 +276,7 @@ La `mainQuest` est exécutée avant l'état `ready` d'Electron. Elle doit être 
 
 La `secondaryQuest` est appelée lorsqu'Electron est prêt. Il est alors possible d'utiliser des goblins comme `goblin-wm` pour créer des fenêtres.
 
-_Cette documentation a été mise à jour automatiquement._
+_Cette documentation a été mise à jour._
 
 [goblin-webpack]: https://github.com/Xcraft-Inc/goblin-webpack
 [goblin-blacksmith]: https://github.com/Xcraft-Inc/goblin-blacksmith
