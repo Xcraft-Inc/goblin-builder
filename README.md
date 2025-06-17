@@ -2,7 +2,7 @@
 
 ## Aperçu
 
-Le module `goblin-builder` est un outil de construction et de packaging polyvalent pour les applications Xcraft. Il permet de générer différents types de packages pour diverses plateformes (Windows, Linux, macOS) et formats (Electron, Debian, Node.js, Web, Blitz). Ce module transforme une application Xcraft en un produit déployable en gérant les dépendances, les ressources et les configurations spécifiques à chaque plateforme.
+Le module `goblin-builder` est un outil de construction et de packaging polyvalent pour les applications Xcraft. Il permet de générer différents types de packages pour diverses plateformes (Windows, Linux, macOS) et formats (Electron, Debian, Node.js, Web, Blitz, NPX). Ce module transforme une application Xcraft en un produit déployable en gérant les dépendances, les ressources et les configurations spécifiques à chaque plateforme.
 
 ## Sommaire
 
@@ -22,6 +22,7 @@ Le module est organisé autour de plusieurs constructeurs spécialisés, chacun 
 - **nodify.js** (`node-builder`) : Crée des applications Node.js autonomes
 - **webify.js** (`web-builder`) : Construit des applications web
 - **blitzify.js** (`blitz-builder`) : Crée des applications web exécutables dans un conteneur WebAssembly
+- **npxify.js** (`npx-builder`) : Génère des packages NPX pour distribution via npm
 
 Tous ces constructeurs héritent d'une classe de base `Builder` qui fournit les fonctionnalités communes.
 
@@ -89,6 +90,15 @@ await quest.cmd('blitzify.build', {
 });
 ```
 
+### Construction d'un package NPX
+
+```javascript
+await quest.cmd('npxify.build', {
+  appId: 'my-app',
+  output: '/path/to/output',
+});
+```
+
 ## Interactions avec d'autres modules
 
 - **[goblin-webpack]** : Utilisé pour la compilation des sources JavaScript
@@ -102,35 +112,65 @@ await quest.cmd('blitzify.build', {
 
 Le module `goblin-builder` peut être configuré via le fichier `app.json` de l'application :
 
-| Option            | Description                                     | Type         | Valeur par défaut |
-| ----------------- | ----------------------------------------------- | ------------ | ----------------- |
-| appId             | Identifiant de l'application                    | String       | -                 |
-| productName       | Nom du produit                                  | String       | 'Goblins'         |
-| description       | Description de l'application                    | String       | -                 |
-| versionFrom       | Module à partir duquel extraire la version      | String       | -                 |
-| goblinEntryPoint  | Point d'entrée goblin                           | String       | 'laboratory'      |
-| mainGoblinModule  | Module goblin principal                         | String       | -                 |
-| fileAssociations  | Associations de fichiers pour l'application     | Array        | -                 |
-| protocols         | Protocoles URL gérés par l'application          | Array        | -                 |
-| build             | Options spécifiques à electron-builder          | Object       | -                 |
-| debify            | Options spécifiques à node-deb                  | Object       | -                 |
-| excludeResources  | Ressources à exclure du package                 | Array/String | -                 |
-| unpackedResources | Ressources à ne pas inclure dans l'archive ASAR | Array/String | -                 |
-| extraBuilds       | Builds supplémentaires à effectuer              | Object       | -                 |
-| blitzify          | Options spécifiques pour le builder Blitz       | Object       | -                 |
+| Option              | Description                                     | Type          | Valeur par défaut |
+| ------------------- | ----------------------------------------------- | ------------- | ----------------- |
+| appId               | Identifiant de l'application                    | String        | -                 |
+| productName         | Nom du produit                                  | String        | 'Goblins'         |
+| description         | Description de l'application                    | String        | -                 |
+| versionFrom         | Module à partir duquel extraire la version      | String        | -                 |
+| goblinEntryPoint    | Point d'entrée goblin                           | String        | 'laboratory'      |
+| mainGoblinModule    | Module goblin principal                         | String        | -                 |
+| fileAssociations    | Associations de fichiers pour l'application     | Array         | -                 |
+| protocols           | Protocoles URL gérés par l'application          | Array         | -                 |
+| build               | Options spécifiques à electron-builder          | Object        | -                 |
+| debify              | Options spécifiques à node-deb                  | Object        | -                 |
+| excludeResources    | Ressources à exclure du package                 | Array/String  | -                 |
+| unpackedResources   | Ressources à ne pas inclure dans l'archive ASAR | Array/String  | -                 |
+| extraBuilds         | Builds supplémentaires à effectuer              | Object        | -                 |
+| blitzify            | Options spécifiques pour le builder Blitz       | Object        | -                 |
+| noAsar              | Désactive l'archive ASAR pour Electron          | Boolean       | false             |
+| arch                | Architecture cible (ia32, x64, arm, arm64)      | String/Object | process.arch      |
+| debDeps             | Dépendances Debian supplémentaires              | Array         | -                 |
+| goblinResources     | Dossiers de ressources des modules goblin       | Array/String  | -                 |
+| excludedGoblinFiles | Fichiers goblin à exclure                       | Array/String  | -                 |
+| excludedFiles       | Fichiers généraux à exclure                     | Array/String  | -                 |
 
 ### Variables d'environnement
 
 | Variable      | Description                                          | Exemple                        | Valeur par défaut |
 | ------------- | ---------------------------------------------------- | ------------------------------ | ----------------- |
 | NODE_ENV      | Environnement Node.js                                | 'production'                   | -                 |
-| BUILD_NUMBER  | Numéro de build (généré automatiquement sur Windows) | '2308'                         | -                 |
+| BUILD_NUMBER  | Numéro de build (généré automatiquement sur Windows) | '2508'                         | -                 |
 | SIGNTOOL_PATH | Chemin vers l'outil de signature (Windows)           | 'C:\\Program Files\\esign.exe' | -                 |
 | APPLE_ID_TEAM | ID d'équipe Apple pour la notarisation (macOS)       | 'ABC123DEF'                    | -                 |
 
 ## Détails des sources
 
-### `builder.js`
+### `blitzify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur Blitz. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `blitz-builder`.
+
+### `debify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur Debian. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `deb-builder`.
+
+### `electronify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur Electron. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `app-builder`.
+
+### `nodify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur Node.js. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `node-builder`.
+
+### `npxify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur NPX. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `npx-builder`.
+
+### `webify.js`
+
+Point d'entrée pour les commandes Xcraft du constructeur Web. Expose les commandes via `xcraftCommands` en utilisant le service générique avec le backend `web-builder`.
+
+### `lib/builder.js`
 
 Classe de base pour tous les constructeurs. Elle fournit les fonctionnalités communes :
 
@@ -142,79 +182,34 @@ Classe de base pour tous les constructeurs. Elle fournit les fonctionnalités co
 
 #### Méthodes publiques
 
-- **`extractStartCraft(libDir, dep, isDev, deps)`** - Extrait récursivement les dépendances d'un module pour la construction.
-- **`_assets(isDev, next)`** - Prépare les assets pour la construction, en mode développement ou production.
-- **`_installDeps(isDev, next)`** - Installe les dépendances npm, en mode développement ou production.
-- **`_blacksmith()`** - Exécute les tâches de rendu côté serveur via goblin-blacksmith.
-- **`_extraBuilds()`** - Exécute des builds supplémentaires configurés dans app.json.
-- **`_cleanup()`** - Nettoie les fichiers temporaires après la construction.
+- **`extractStartCraft(libDir, dep, isDev, deps)`** — Extrait récursivement les dépendances d'un module pour la construction.
+- **`_assets(isDev, next)`** — Prépare les assets pour la construction, en mode développement ou production.
+- **`_installDeps(isDev, next)`** — Installe les dépendances npm, en mode développement ou production.
+- **`_blacksmith()`** — Exécute les tâches de rendu côté serveur via goblin-blacksmith.
+- **`_extraBuilds()`** — Exécute des builds supplémentaires configurés dans app.json.
+- **`_cleanup()`** — Nettoie les fichiers temporaires après la construction.
 
-### `app-builder.js`
+### `lib/app-builder.js`
 
 Constructeur spécialisé pour les applications Electron. Il gère :
 
 - La configuration d'electron-builder
 - La signature des exécutables (Windows)
 - La génération de packages pour Windows, Linux et macOS
-- La gestion des associations de fichiers
+- La gestion des associations de fichiers et protocoles
+- La notarisation macOS
+- La génération automatique de numéros de build
 
 #### Méthodes publiques
 
-- **`_clean(next)`** - Nettoie les répertoires de construction.
-- **`_webpack()`** - Compile les sources JavaScript avec webpack.
-- **`_esignInit()`** - Initialise l'outil de signature pour Windows.
-- **`_esign(configuration)`** - Signe un fichier exécutable sur Windows.
-- **`_electron()`** - Exécute electron-builder pour créer les packages.
-- **`run()`** - Point d'entrée principal qui orchestre tout le processus de construction.
+- **`_clean(next)`** — Nettoie les répertoires de construction.
+- **`_webpack()`** — Compile les sources JavaScript avec webpack pour le rendu Electron.
+- **`_esignInit()`** — Initialise l'outil de signature pour Windows.
+- **`_esign(configuration)`** — Signe un fichier exécutable sur Windows avec gestion des timeouts et retry.
+- **`_electron()`** — Exécute electron-builder pour créer les packages avec configuration complète.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
 
-### `deb-builder.js`
-
-Constructeur spécialisé pour les packages Debian. Il gère :
-
-- La configuration de node-deb
-- La génération de scripts post-installation
-- La gestion des dépendances Debian
-
-#### Méthodes publiques
-
-- **`_copyResources(resourcesName)`** - Copie les ressources spécifiques.
-- **`_assetsDeb()`** - Prépare les assets spécifiques pour les packages Debian.
-- **`_npmInstall(next)`** - Installe les dépendances npm pour le package Debian.
-- **`_nodeDeb(next)`** - Exécute node-deb pour créer le package Debian.
-- **`_hasBlacksmith()`** - Vérifie si le module utilise goblin-blacksmith.
-- **`run()`** - Point d'entrée principal qui orchestre tout le processus de construction.
-
-### `node-builder.js`
-
-Constructeur spécialisé pour les applications Node.js autonomes. Il gère :
-
-- La création d'une structure de projet Node.js
-- L'installation des dépendances de production uniquement
-- La copie des ressources nécessaires
-
-#### Méthodes publiques
-
-- **`_copyResources(resourcesName)`** - Copie les ressources spécifiques.
-- **`_assetsDeb()`** - Prépare les assets spécifiques.
-- **`_npmInstall(next)`** - Installe les dépendances npm.
-- **`_hasBlacksmith()`** - Vérifie si le module utilise goblin-blacksmith.
-- **`_clean()`** - Nettoie les répertoires de construction.
-- **`run()`** - Point d'entrée principal qui orchestre tout le processus de construction.
-
-### `web-builder.js`
-
-Constructeur spécialisé pour les applications web. Il gère :
-
-- La configuration de webpack pour le web
-- La génération des fichiers statiques
-
-#### Méthodes publiques
-
-- **`_clean(next)`** - Nettoie les répertoires de construction.
-- **`_webpack()`** - Compile les sources JavaScript avec webpack pour le web.
-- **`run()`** - Point d'entrée principal qui orchestre tout le processus de construction.
-
-### `blitz-builder.js`
+### `lib/blitz-builder.js`
 
 Constructeur spécialisé pour les applications Blitz (WebAssembly). Il gère :
 
@@ -225,31 +220,115 @@ Constructeur spécialisé pour les applications Blitz (WebAssembly). Il gère :
 
 #### Méthodes publiques
 
-- **`cleanReleaseDir()`** - Nettoie et réorganise le répertoire de release.
-- **`generateBlitz(chunks, clientId)`** - Génère les fichiers nécessaires pour l'application Blitz.
-- **`splitSnapshot(snapshot, size)`** - Divise le snapshot en chunks de taille spécifiée.
-- **`run()`** - Point d'entrée principal qui orchestre tout le processus de construction.
+- **`cleanReleaseDir()`** — Nettoie et réorganise le répertoire de release en déplaçant les modules du dossier lib vers node_modules.
+- **`generateBlitz(chunks, clientId)`** — Génère les fichiers nécessaires pour l'application Blitz en utilisant les templates.
+- **`splitSnapshot(snapshot, size)`** — Divise le snapshot en chunks de 4MB pour optimiser le chargement.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
 
-### `service.js`
+### `lib/deb-builder.js`
 
-Définit les commandes Xcraft exposées par le module :
+Constructeur spécialisé pour les packages Debian. Il gère :
 
-- **`build(quest, appId, output, $arch)`** - Construction avec les paramètres par défaut.
-- **`build-release(quest, appId, output, $arch)`** - Construction en mode release.
-- **`build-opts(quest, appId, variantId, appDir, libDir, output, release, arch, compression, $targetRuntime, $targetVersion, $targetArch)`** - Construction avec des options personnalisées.
+- La configuration de node-deb
+- La génération de scripts post-installation
+- La gestion des dépendances Debian
+- La configuration systemd
 
-### `get-year-week-number.js`
+#### Méthodes publiques
 
-Utilitaire pour générer des numéros de build basés sur l'année et la semaine, utilisé principalement pour les versions Windows.
+- **`_copyResources(resourcesName)`** — Copie les ressources spécifiques selon la plateforme et les variantes.
+- **`_assetsDeb()`** — Prépare les assets spécifiques pour les packages Debian.
+- **`_npmInstall(next)`** — Installe les dépendances npm pour le package Debian.
+- **`_nodeDeb(next)`** — Exécute node-deb pour créer le package Debian.
+- **`_hasBlacksmith()`** — Vérifie si le module utilise goblin-blacksmith.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
 
-- **`getYearWeekNumber(d)`** - Obtient le numéro de semaine ISO et l'année correspondante pour une date donnée.
-- **`yearWeekToBuildNumber(year, week)`** - Convertit une année et un numéro de semaine en numéro de build.
+### `lib/get-year-week-number.js`
 
-### `blitz/snapshot.js`
+Utilitaire pour générer des numéros de build basés sur l'année et la semaine ISO, utilisé principalement pour les versions Windows.
+
+- **`getYearWeekNumber(d)`** — Obtient le numéro de semaine ISO et l'année correspondante pour une date donnée selon la norme ISO 8601.
+- **`yearWeekToBuildNumber(year, week)`** — Convertit une année et un numéro de semaine en numéro de build au format YYWW.
+
+### `lib/node-builder.js`
+
+Constructeur spécialisé pour les applications Node.js autonomes. Il gère :
+
+- La création d'une structure de projet Node.js
+- L'installation des dépendances de production uniquement
+- La copie des ressources nécessaires
+- Support pour l'omission de types de dépendances spécifiques
+
+#### Méthodes publiques
+
+- **`_copyResources(resourcesName)`** — Copie les ressources spécifiques selon la plateforme et les variantes.
+- **`_assetsDeb()`** — Prépare les assets spécifiques.
+- **`_npmInstall(next)`** — Installe les dépendances npm avec support pour les options d'omission.
+- **`_hasBlacksmith()`** — Vérifie si le module utilise goblin-blacksmith.
+- **`_clean()`** — Nettoie les répertoires de construction.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
+
+### `lib/npx-builder.js`
+
+Constructeur spécialisé pour les packages NPX. Il gère :
+
+- La création d'un package npm exécutable via npx
+- La génération d'un package.json avec les versions exactes des dépendances
+- La copie des ressources nécessaires sans installation des node_modules
+
+#### Méthodes publiques
+
+- **`_copyResources(resourcesName)`** — Copie les ressources spécifiques selon la plateforme et les variantes.
+- **`_assets()`** — Prépare les assets spécifiques pour NPX en utilisant les versions exactes des dépendances.
+- **`_assetsNpx()`** — Prépare les assets spécifiques pour NPX.
+- **`_clean()`** — Nettoie les répertoires de construction.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
+
+### `lib/service.js`
+
+Définit les commandes Xcraft exposées par le module. Utilise le pattern de factory pour créer des services spécialisés :
+
+#### Méthodes publiques
+
+- **`build(quest, appId, output, $arch)`** — Construction avec les paramètres par défaut en utilisant les chemins du projet.
+- **`build-release(quest, appId, output, $arch)`** — Construction en mode release avec signature activée.
+- **`build-opts(quest, appId, variantId, appDir, libDir, output, release, arch, compression, $targetRuntime, $targetVersion, $targetArch)`** — Construction avec des options personnalisées complètes.
+
+### `lib/web-builder.js`
+
+Constructeur spécialisé pour les applications web. Il gère :
+
+- La configuration de webpack pour le web
+- La génération des fichiers statiques
+- La compilation pour le navigateur
+
+#### Méthodes publiques
+
+- **`_clean(next)`** — Nettoie les répertoires de construction.
+- **`_webpack()`** — Compile les sources JavaScript avec webpack pour le web avec target 'web'.
+- **`run()`** — Point d'entrée principal qui orchestre tout le processus de construction.
+
+### `lib/blitz/snapshot.js`
 
 Utilitaire pour créer un snapshot d'une application Node.js, utilisé par le constructeur Blitz. Il parcourt récursivement le système de fichiers et sérialise la structure en utilisant msgpackr.
 
-- **`snapshot(inputDir, outputFile)`** - Crée un snapshot du répertoire d'entrée et l'écrit dans le fichier de sortie.
+- **`snapshot(inputDir, outputFile)`** — Crée un snapshot du répertoire d'entrée et l'écrit dans le fichier de sortie en format msgpack.
+
+### Fichiers spéciaux (Blitz WebContainer)
+
+#### `lib/blitz/www/main.js`
+
+Script principal pour l'application Blitz qui :
+
+- Initialise WebContainer avec l'API appropriée et l'authentification
+- Charge et reconstitue le snapshot de l'application depuis les chunks
+- Monte le système de fichiers dans WebContainer
+- Lance l'application Node.js dans le conteneur avec les paramètres appropriés
+- Gère l'affichage dans une iframe et la redirection des ports
+
+#### `lib/blitz/www/package.json`
+
+Configuration npm pour l'environnement WebContainer incluant les dépendances nécessaires (@webcontainer/api) et un script de post-installation pour corriger un bug de chemin de module dans l'API WebContainer.
 
 ## Définitions d'applications
 
